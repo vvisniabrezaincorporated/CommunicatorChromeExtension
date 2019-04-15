@@ -1,53 +1,119 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title></title>
-  </head>
-  <body>
-      <div class="container">
-              <div class ="text-center display-1">Options</div>
 
-              <form>
-                <div class="form-group">
-                  <label for="form-control">Email address</label>
-                  <input type="email" class="form-control" id="inputEmail" placeholder="Enter email">
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
-                  <div class="invalid-feedback">
-                    Enter proper email.
-                  </div>
-                </div>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title></title>
+</head>
 
-                <div class="form-group">
-                  <label for="inputOwner">Owner</label>
-                  <input type="text" class="form-control" id="inputOwner" placeholder="Enter owner">
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
-                  <div class="invalid-feedback">
-                    Enter owner.
-                  </div>
-                </div>
+<body>
+  <div class="container">
+    <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="create-tab" data-toggle="tab" href="#create" role="tab" aria-controls="create"
+          aria-selected="true">Create</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login"
+          aria-selected="false">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="export-tab" data-toggle="tab" href="#export" role="tab" aria-controls="export"
+          aria-selected="false">Export</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
 
-                <div class="form-group">
-                  <label for="inputPassword">Password</label>
-                  <input type="password" class="form-control" id="inputPassword" aria-describedby="passwordHelp" placeholder="Password">
-                  <small id="passwordHelp" class="form-text text-muted">Password requirements will be here.</small>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
-                  <div class="invalid-feedback">
-                    Enter proper password.
-                  </div>
-                  <div class="progress invisible" id="progressBar">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%">Creating key..</div>
-                  </div>
-                </div>
-                <input type="button" id="createKey" class="btn btn-primary" value="Create" />
-              </form>
+
+      <div class="tab-pane fade show active" id="create" role="tabpanel" aria-labelledby="create-tab">
+        <div class="container">
+          <div class="text-center display-1">Create</div>
+          <form>
+            <div class="form-group">
+              <label for="form-control">Email address</label>
+              <input type="email" class="form-control" id="inputEmail" placeholder="Enter email">
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Enter proper email.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="inputOwner">Owner</label>
+              <input type="text" class="form-control" id="inputOwner" placeholder="Enter owner">
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Enter owner.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="inputPassword">Password</label>
+              <input type="password" class="form-control" id="inputPassword" aria-describedby="passwordHelp"
+                placeholder="Password">
+              <small id="passwordHelp" class="form-text text-muted">Password requirements will be here.</small>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Enter proper password.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="progress invisible" id="progressBar">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                  aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%">Creating key..</div>
+              </div>
+            </div>
+
+            <input type="button" id="createKey" class="form-control btn btn-primary" value="Create" />
+          </form>
+        </div>
       </div>
-  </body>
+
+
+      <div class="tab-pane fade" id="login" role="tabpanel" aria-labelledby="login-tab">
+        <div class="container">
+          <div class="text-center display-1">Login</div>
+          <form>
+
+            <div class="form-group">
+              <label for="loginOwner">Owner</label>
+              <input type="text" class="form-control" id="loginOwner" placeholder="Enter owner">
+            </div>
+
+            <div class="form-group">
+              <label for="loginPassword">Password</label>
+              <input type="password" class="form-control" id="loginPassword" aria-describedby="passwordHelp"
+                placeholder="Password">
+            </div>
+
+            <div class="form-group">
+              <input type="button" id="loginKey" class="form-control btn btn-primary" value="Login" />
+              <div class="invalid-feedback">
+                Password or Owner incorrect.
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+      <div class="tab-pane fade" id="export" role="tabpanel" aria-labelledby="export-tab">
+        <div class="container">
+          <div class="text-center display-1">Export</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+
 </html>

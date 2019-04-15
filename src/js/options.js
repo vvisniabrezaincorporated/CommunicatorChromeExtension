@@ -5,8 +5,8 @@ import { User } from './user.js'
 var openpgp = require('openpgp');
 var $ = require("jquery");
 
-$("#createKey").click(function(){
-    if(validation()){
+$("#createKey").click(function () {
+    if (validationCreate()) {
 
         $('#progressBar').removeClass('invisible');
         $('#progressBar').addClass('visible');
@@ -16,95 +16,101 @@ $("#createKey").click(function(){
 
         createKey();
         console.log('OK');
-    }else{
+    } else {
         console.log('NIE OK');
     }
 });
 
-function createKey(){
+$("#loginKey").click(function () {
 
-    chrome.storage.local.get(['UserList'], function(result) {
-        if(result.UserList === undefined){
-            chrome.storage.local.set({UserList: []});
+    chrome.storage.local.get(['UserList'], function (result) {
+        var userList = result.UserList
+        var validation = false
+
+        userList.forEach(function (user) {
+            if (user.name == $('#loginOwner').val() && user.password == $('#loginPassword').val()) {
+                chrome.storage.local.set({currentOwner: user.name, currentKey: user.privkey});
+                validation = true;
+            }
+        });
+        if(!validation){
+            $('#loginKey').addClass('is-invalid');
+        }
+    })
+});
+
+function createKey() {
+
+    chrome.storage.local.get(['UserList'], function (result) {
+        if (result.UserList === undefined) {
+            chrome.storage.local.set({ UserList: [] });
         }
         console.log(result.UserList);
-    }) 
+    })
 
     let user = new User($('#inputOwner').val(), $('#inputEmail').val(), $('#inputPassword').val(),
-    null, null, null);
+        null, null, null);
 
     var options = {
-        userIds: [{ name:user.name, email:user.emailaddress }],
+        userIds: [{ name: user.name, email: user.emailaddress }],
         numBits: 4096,
-        passphrase:user.password
-      };
-  
-      openpgp.generateKey(options).then(function(key) {
+        passphrase: user.password
+    };
+
+    openpgp.generateKey(options).then(function (key) {
         var privkey = key.privateKeyArmored;
         var pubkey = key.publicKeyArmored;
         var revocationCertificate = key.revocationCertificate;
-  
-        chrome.storage.local.get(['UserList'], function(result) {
+
+        chrome.storage.local.get(['UserList'], function (result) {
             user.privkey = privkey;
             user.publicKey = pubkey;
             user.revocationCertificate = revocationCertificate;
-            
+
             var LocalUserList = result.UserList;
             LocalUserList.push(user);
-            chrome.storage.local.set({UserList: LocalUserList});
+            chrome.storage.local.set({ UserList: LocalUserList });
             $('#progressBar').removeClass('visible');
             $('#progressBar').addClass('invisible');
         })
     });
 }
 
-function validation(){
+function validationCreate() {
     var email = true;
     var owner = true;
     var password = true;
 
-    if($('#inputOwner').val()==""){
+    if ($('#inputOwner').val() == "") {
         $('#inputOwner').removeClass('is-valid');
         $('#inputOwner').addClass('is-invalid');
         owner = false;
-    }else{
+    } else {
         $('#inputOwner').removeClass('is-invalid');
         $('#inputOwner').addClass('is-valid');
     }
 
-    if($('#inputEmail').val()==""){
+    if (!validateEmail($('#inputEmail').val())) {
         $('#inputEmail').removeClass('is-valid');
         $('#inputEmail').addClass('is-invalid');
         email = false;
-    } else if (!validateEmail($('#inputEmail').val())){
-        $('#inputEmail').removeClass('is-valid');
-        $('#inputEmail').addClass('is-invalid');
-        email = false;
-    }else{
+    } else {
         $('#inputEmail').removeClass('is-invalid');
         $('#inputEmail').addClass('is-valid');
     }
 
-    if($('#inputPassword').val()==""){
-        $('#inputPassword').removeClass('is-valid');
-        $('#inputPassword').addClass('is-invalid');
-        password = false;
-    } else if (!hasNumber($('#inputPassword').val())){
+    if (!hasNumber($('#inputPassword').val()) || !hasLowerAndUpper($('#inputPassword').val())) {
         $('#inputPassword').removeClass('is-valid');
         $('#inputPassword').addClass('is-invalid');
         password = false
-    } else if (!hasLowerAndUpper($('#inputPassword').val())){
-        $('#inputPassword').removeClass('is-valid');
-        $('#inputPassword').addClass('is-invalid');
-        password = false;
-    }else{
+    } else {
         $('#inputPassword').removeClass('is-invalid');
         $('#inputPassword').addClass('is-valid');
     }
 
-    if(email && password && owner){
+    if (email && password && owner) {
         return true;
-    } else{
+    } else {
         return false;
     }
 }
