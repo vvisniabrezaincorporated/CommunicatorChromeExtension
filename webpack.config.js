@@ -24,7 +24,8 @@ var options = {
     popup: path.join(__dirname, "src", "js", "popup.js"),
     options: path.join(__dirname, "src", "js", "options.js"),
     background: path.join(__dirname, "src", "js", "background.js"),
-    user: path.join(__dirname, "src", "js", "user.js")
+    user: path.join(__dirname, "src", "js", "user.js"),
+    content: path.join(__dirname, "src", "js", "content.js")
   },
   output: {
     path: path.join(__dirname, "build"),
@@ -110,6 +111,11 @@ var options = {
       template: path.join(__dirname, "src", "background.html"),
       filename: "background.html",
       chunks: ["background"]
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, "src", "content.html"),
+      filename: "content.html",
+      chunks: ["content"]
     }),
     new WriteFilePlugin()
   ]

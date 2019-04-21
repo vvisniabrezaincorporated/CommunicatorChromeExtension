@@ -5,6 +5,49 @@ import { User } from './user.js'
 var openpgp = require('openpgp');
 var $ = require("jquery");
 
+
+////////////kod do testow
+$(function () {
+    chrome.storage.local.get(['currentPrivKey', 'currentPubKey'], function (result) {
+        var user = {};
+        user.priv = result.currentPrivKey;
+        user.publ = result.currentPubKey;
+        
+        const encryptDecryptFunction = async () => {
+            var passphrase = "Aq1"
+            const privKeyObj = (await openpgp.key.readArmored(user.priv)).keys[0]
+            await privKeyObj.decrypt(passphrase)
+        
+            const options = {
+                message: openpgp.message.fromText('test1'),
+                publicKeys: (await openpgp.key.readArmored(user.publ)).keys,
+                privateKeys: [privKeyObj]
+            }
+            var encrypted;
+            openpgp.encrypt(options).then(ciphertext => {
+                encrypted = ciphertext.data
+                console.log(encrypted);
+                //$("#wiadomosc").text(encrypted);
+                return encrypted
+            })
+            .then(async encrypted => {
+                const options = {
+                    message: await openpgp.message.readArmored(encrypted),
+                    publicKeys: (await openpgp.key.readArmored(user.publ)).keys,
+                    privateKeys: [privKeyObj]
+                }
+                openpgp.decrypt(options).then(plaintext => {
+                    console.log(plaintext.data)
+                    return plaintext.data
+                })
+            })
+        }
+        encryptDecryptFunction();
+    })
+})
+////////////////nizej normalny kod
+
+
 $("#createKey").click(function () {
     if (validationCreate()) {
 
@@ -29,14 +72,18 @@ $("#loginKey").click(function () {
 
         userList.forEach(function (user) {
             if (user.name == $('#loginOwner').val() && user.password == $('#loginPassword').val()) {
-                chrome.storage.local.set({currentOwner: user.name, currentKey: user.privkey});
+                chrome.storage.local.set({ currentOwner: user.name, currentPrivKey: user.privkey, currentPubKey: user.publicKey });
                 validation = true;
             }
         });
-        if(!validation){
+        if (!validation) {
             $('#loginKey').addClass('is-invalid');
         }
     })
+});
+
+$("#logoutKey").click(function () {
+    chrome.storage.local.remove(['currentOwner', 'currentPrivKey', 'currentPubKey']);
 });
 
 function createKey() {

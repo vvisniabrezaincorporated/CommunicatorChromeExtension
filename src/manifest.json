@@ -14,11 +14,20 @@
     "page": "background.html"
   },
 
+  "content_scripts":[
+    {
+        "matches": ["file:///home/mbreza/vs-workspace/text.html"],
+        "js": ["content.bundle.js"]
+    }
+  ],
+
   "options_page": "options.html",
 
   "permissions": [
       "storage",
       "notifications",
-      "contextMenus"
+      "contextMenus",
+      "tabs",
+      "file:///home/mbreza/vs-workspace/text.html"
   ]
 }
