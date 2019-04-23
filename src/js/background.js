@@ -24,7 +24,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             request.privkey, request.publicKey, null);
 
         sessionStorage.setItem("currentUser", JSON.stringify(user));
-    } else if (request.type == "popup") {
+    } else if (request.type == "send") {
         console.log("response");
         sendResponse({ currentUser: sessionStorage.getItem("currentUser") });
     } else if (request.type == "Logout"){

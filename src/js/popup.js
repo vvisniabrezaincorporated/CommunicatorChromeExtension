@@ -12,7 +12,7 @@ $(function () {
             $("#setText").text("You are currenty logged in as " + result.currentOwner);
         }else if(result.loggedIn == "Temp"){
             console.log("Temp");
-            chrome.runtime.sendMessage({type: "popup"}, function(response) {
+            chrome.runtime.sendMessage({type: "send"}, function(response) {
                 var viewUser= $.parseJSON(response.currentUser);
                 $("#setText").text("You are currenty logged in as " + viewUser.name);
               });

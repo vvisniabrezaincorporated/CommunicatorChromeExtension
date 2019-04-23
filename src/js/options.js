@@ -51,6 +51,7 @@ function logInVisibility() {
         if (result.loggedIn == "Const" || result.loggedIn == "Temp") {
             $('#logoutDiv').removeClass('cantsee');
             $('#loginDiv').addClass('cantsee');
+            $('#loginKey').removeClass('is-invalid');
 
         } else {
             $('#loginDiv').removeClass('cantsee');
