@@ -36,8 +36,7 @@
               <div class="valid-feedback">
                 Looks good!
               </div>
-              <div class="invalid-feedback">
-                Enter proper email.
+              <div class="invalid-feedback" id="invalidEmail">
               </div>
             </div>
 
@@ -47,9 +46,7 @@
               <div class="valid-feedback">
                 Looks good!
               </div>
-              <div class="invalid-feedback">
-                Enter owner.
-              </div>
+              <div class="invalid-feedback" id="invalidOwner"></div>
             </div>
 
             <div class="form-group">
@@ -82,26 +79,36 @@
         <div class="container">
           <div class="text-center display-1">Login</div>
           <form>
+            <div id="loginDiv">
+              <div class="form-group">
+                <label for="loginOwner">Owner</label>
+                <input type="text" class="form-control" id="loginOwner" placeholder="Enter owner">
+              </div>
 
-            <div class="form-group">
-              <label for="loginOwner">Owner</label>
-              <input type="text" class="form-control" id="loginOwner" placeholder="Enter owner">
-            </div>
+              <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" class="form-control" id="loginPassword" aria-describedby="passwordHelp"
+                  placeholder="Password">
+              </div>
 
-            <div class="form-group">
-              <label for="loginPassword">Password</label>
-              <input type="password" class="form-control" id="loginPassword" aria-describedby="passwordHelp"
-                placeholder="Password">
-            </div>
+              <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="rememberCheck">
+                  <label class="form-check-label" for="rememberCheck">
+                    Remember me.
+                  </label>
+                </div>
+              </div>
 
-            <div class="form-group">
-              <input type="button" id="loginKey" class="form-control btn btn-primary" value="Login" />
-              <div class="invalid-feedback">
-                Password or Owner incorrect.
+              <div class="form-group">
+                <input type="button" id="loginKey" class="form-control btn btn-primary" value="Login" />
+                <div class="invalid-feedback">
+                  Password or Owner incorrect.
+                </div>
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" id="logoutDiv">
               <input type="button" id="logoutKey" class="form-control btn btn-primary" value="Logout" />
             </div>
           </form>
@@ -117,8 +124,6 @@
       </div>
     </div>
   </div>
-
-
 </body>
 
 </html>
